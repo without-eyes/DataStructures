@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include <string.h>
 #include "../include/linkedlists/singlelinkedlist.h"
 
 void showMenu() {
+    puts("=====================================================\n");
     puts("What data structure do you want to use:");
     puts("1 - Single-linked list");
     puts("2 - Double-linked list");
@@ -17,16 +17,20 @@ void showMenu() {
 
 int main(void) {
     showMenu();
+
     int choice;
     scanf("%d", &choice);
+
+    puts("\n=====================================================\n");
     switch (choice) {
         case 1:
-            puts("\nDo you want your single-linked list to be circular?");
+            puts("Do you want your single-linked list to be circular?");
             puts("1 - Yes");
             puts("2 - No");
             do {
                 printf("Your choice -> ");
                 scanf("%d", &choice);
+                puts("\n=====================================================\n");
                 if (choice == 1) {
                     // circular
                 } else if (choice == 2) {

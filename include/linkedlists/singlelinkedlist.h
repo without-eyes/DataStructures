@@ -10,7 +10,13 @@ struct Node{
 
 void createSingleLinkedList();
 
+int setListSize();
+
 Node* createNode();
+
+void initializeList(Node** head, int listSize);
+
+void printList(Node* head);
 
 void freeSingleLinkedList(Node* head);
 
