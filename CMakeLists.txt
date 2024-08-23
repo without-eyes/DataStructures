@@ -4,5 +4,7 @@ project(DataStructures C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(DataStructures src/main.c
-        include/linkedlists/singlelinkedlist.h
-        src/linkedlists/singlelinkedlist.c)
+        include/singlelinkedlist.h
+        src/singlelinkedlist.c
+        include/utils.h
+        src/utils.c)

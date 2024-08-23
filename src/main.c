@@ -1,27 +1,13 @@
 #include <stdio.h>
-#include "../include/linkedlists/singlelinkedlist.h"
-
-void showMenu() {
-    puts("=====================================================\n");
-    puts("What data structure do you want to use:");
-    puts("1 - Single-linked list");
-    puts("2 - Double-linked list");
-    puts("3 - Double-linked list");
-    puts("4 - Stack");
-    puts("5 - Queue");
-    puts("6 - Tree");
-    puts("7 - Hash table");
-    puts("8 - Graph");
-    printf("Your choice -> ");
-}
+#include "../include/singlelinkedlist.h"
+#include "../include/utils.h"
 
 int main(void) {
     showMenu();
-
     int choice;
     scanf("%d", &choice);
+    printBorder();
 
-    puts("\n=====================================================\n");
     switch (choice) {
         case 1:
             puts("Do you want your single-linked list to be circular?");
@@ -30,7 +16,7 @@ int main(void) {
             do {
                 printf("Your choice -> ");
                 scanf("%d", &choice);
-                puts("\n=====================================================\n");
+                printBorder();
                 if (choice == 1) {
                     // circular
                 } else if (choice == 2) {
@@ -42,7 +28,4 @@ int main(void) {
 
         default: break;
     }
-
-
-    return 0;
 }
