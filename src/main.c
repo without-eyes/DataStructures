@@ -4,6 +4,7 @@
 
 int main(void) {
     showMenu();
+
     int choice;
     scanf("%d", &choice);
     printBorder();
@@ -18,9 +19,9 @@ int main(void) {
                 scanf("%d", &choice);
                 printBorder();
                 if (choice == 1) {
-                    // circular
+                    createCSLL();
                 } else if (choice == 2) {
-                    createSingleLinkedList();
+                    createNCSLL();
                 } else {
                     puts("Wrong input!");
                 }

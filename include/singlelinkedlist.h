@@ -1,23 +1,34 @@
 #ifndef DATASTRUCTURES_SINGLELINKEDLIST_H
 #define DATASTRUCTURES_SINGLELINKEDLIST_H
 
-typedef struct SingleLinkedListNode SingleLinkedListNode;
+typedef struct SLLNode SLLNode;
 
-struct SingleLinkedListNode {
+struct SLLNode {
     int value;
-    SingleLinkedListNode* next;
+    SLLNode* next;
 };
 
-void createSingleLinkedList();
+// Non-circular single-linked list
+void createNCSLL();
 
-int setSingleLinkedListSize();
+void initializeNCSLL(SLLNode** head, int listSize);
 
-SingleLinkedListNode* createSingleLinkedListNode();
+void printNCSLL(SLLNode* head);
 
-void initializeSingleLinkedList(SingleLinkedListNode** head, int listSize);
+void freeNCSLL(SLLNode* head);
 
-void printSingleLinkedList(SingleLinkedListNode* head);
+// Circular single-linked list
+void createCSLL();
 
-void freeSingleLinkedList(SingleLinkedListNode* head);
+void initializeCSLL(SLLNode** head, int listSize);
+
+void printCSLL(SLLNode* head);
+
+void freeCSLL(SLLNode* head);
+
+// Both
+int setSLLSize();
+
+SLLNode* createSLLNode();
 
 #endif //DATASTRUCTURES_SINGLELINKEDLIST_H
