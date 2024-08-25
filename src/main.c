@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../include/singlelinkedlist.h"
 #include "../include/utils.h"
+#include "../include/doublelinkedlist.h"
 
 int main(void) {
     showMenu();
@@ -26,6 +27,11 @@ int main(void) {
                     puts("Wrong input!");
                 }
             } while (choice != 1 && choice != 2);
+            break;
+
+        case 2:
+            createDLL();
+            break;
 
         default: break;
     }

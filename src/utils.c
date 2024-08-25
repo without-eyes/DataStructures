@@ -6,12 +6,11 @@ void showMenu() {
     puts("What data structure do you want to use:");
     puts("1 - Single-linked list");
     puts("2 - Double-linked list");
-    puts("3 - Double-linked list");
-    puts("4 - Stack");
-    puts("5 - Queue");
-    puts("6 - Tree");
-    puts("7 - Hash table");
-    puts("8 - Graph");
+    puts("3 - Stack");
+    puts("4 - Queue");
+    puts("5 - Tree");
+    puts("6 - Hash table");
+    puts("7 - Graph");
     printf("Your choice -> ");
 }
 

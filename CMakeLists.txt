@@ -7,4 +7,5 @@ add_executable(DataStructures src/main.c
         include/singlelinkedlist.h
         src/singlelinkedlist.c
         include/utils.h
-        src/utils.c)
+        src/utils.c
+        src/doublelinkedlist.c)

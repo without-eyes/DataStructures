@@ -30,7 +30,7 @@ void initializeNCSLL(SLLNode** head, int listSize) {
 
 void printNCSLL(SLLNode* head) {
     while (head->next != NULL) {
-        printf("%d -> ", head->value);
+        printf("%d —> ", head->value);
         head = head->next;
     }
     printf("%d", head->value);
