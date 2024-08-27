@@ -4,14 +4,14 @@
 
 // Non-circular single-linked list
 void createNCSLL() {
-    int listSize = setSLLSize();
     SLLNode* head = NULL;
-    initializeNCSLL(&head, listSize);
-    printNCSLL(head);
+    initializeNCSLL(&head);
+    while (SLLMenu(&head, false));
     freeNCSLL(head);
 }
 
-void initializeNCSLL(SLLNode** head, int listSize) {
+void initializeNCSLL(SLLNode** head) {
+    int listSize = setSLLSize();
     for (int i = 0; i < listSize; i++) {
         if (i == 0) {
             *head = createSLLNode();
@@ -25,15 +25,16 @@ void initializeNCSLL(SLLNode** head, int listSize) {
             previousNode->next = newNode;
         }
     }
-    printBorder();
 }
 
 void printNCSLL(SLLNode* head) {
+    printBorder();
+    puts("Single-linked list:");
     while (head->next != NULL) {
         printf("%d —> ", head->value);
         head = head->next;
     }
-    printf("%d", head->value);
+    printf("%d\n", head->value);
 }
 
 void freeNCSLL(SLLNode* head) {
@@ -47,14 +48,14 @@ void freeNCSLL(SLLNode* head) {
 
 // Circular single-linked list
 void createCSLL() {
-    int listSize = setSLLSize();
     SLLNode* head = NULL;
-    initializeCSLL(&head, listSize);
-    printCSLL(head);
+    initializeCSLL(&head);
+    while (SLLMenu(&head, true));
     freeCSLL(head);
 }
 
-void initializeCSLL(SLLNode** head, int listSize) {
+void initializeCSLL(SLLNode** head) {
+    int listSize = setSLLSize();
     for (int i = 0; i < listSize; i++) {
         if (i == 0) {
             *head = createSLLNode();
@@ -73,6 +74,8 @@ void initializeCSLL(SLLNode** head, int listSize) {
 }
 
 void printCSLL(SLLNode* head) {
+    printBorder();
+    puts("Single-linked list:");
     SLLNode* curr = head;
     do {
         printf("%d —> ", curr->value);
@@ -115,5 +118,86 @@ SLLNode* createSLLNode() {
     node->next = NULL;
 
     return node;
+}
+
+int SLLMenu(SLLNode** head, bool isSSLCircular) {
+    printBorder();
+    puts("Actions:");
+    puts("1 - Add item");
+    puts("2 - Delete item");
+    puts("3 - Print SLL");
+    puts("4 - Exit");
+    printf("Your choice -> ");
+
+    int choice;
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1:
+            printBorder();
+            printf("Enter position of new node -> ");
+            int newNodePosition;
+            scanf("%d", &newNodePosition);
+            addItem(head, newNodePosition);
+            break;
+
+        case 2:
+            printBorder();
+            printf("Enter position of node that you want to delete -> ");
+            int deleteNodePosition;
+            scanf("%d", &deleteNodePosition);\
+            deleteItem(head, deleteNodePosition);
+            break;
+
+        case 3:
+            isSSLCircular ? printCSLL(*head) : printNCSLL(*head);
+            break;
+
+        case 4:
+            return 0;
+
+        default:
+            break;
+    }
+
+    return 1;
+}
+
+void addItem(SLLNode** head, int newNodePosition) {
+    SLLNode* newNode = createSLLNode();
+    if (newNodePosition == 1) {
+        newNode->next = *head;
+        *head = newNode;
+    }
+
+    SLLNode* curr = *head;
+    int currentPosition = 1;
+    while (currentPosition < newNodePosition - 1) {
+        curr = curr->next;
+        currentPosition++;
+    }
+
+    newNode->next = curr->next;
+    curr->next = newNode;
+}
+
+void deleteItem(SLLNode** head, int deleteNodePosition) {
+    SLLNode* temp;
+    if (deleteNodePosition == 1) {
+        temp = *head;
+        *head = (*head)->next;
+        free(temp);
+    }
+
+    SLLNode* curr = *head;
+    int currentPosition = 1;
+    while (currentPosition < deleteNodePosition - 1) {
+        curr = curr->next;
+        currentPosition++;
+    }
+
+    temp = curr->next;
+    curr->next = curr->next->next;
+    free(temp);
 }
 
