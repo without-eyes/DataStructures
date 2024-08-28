@@ -10,33 +10,33 @@ struct SLLNode {
     SLLNode* next;
 };
 
-// Non-circular single-linked list
-void createNCSLL();
+typedef struct {
+    SLLNode* head;
+    bool isCircular;
+} SingleLinkedList;
 
-void initializeNCSLL(SLLNode** head);
+void createSLL(bool isCircular);
 
-void printNCSLL(SLLNode* head);
+void initializeSLL(SingleLinkedList* singleLinkedList);
 
-void freeNCSLL(SLLNode* head);
-
-// Circular single-linked list
-void createCSLL();
-
-void initializeCSLL(SLLNode** head);
-
-void printCSLL(SLLNode* head);
-
-void freeCSLL(SLLNode* head);
-
-// Both
 int setSLLSize();
 
 SLLNode* createSLLNode();
 
-int SLLMenu(SLLNode** head, bool isSSLCircular);
+int SLLAction(SingleLinkedList* singleLinkedList);
 
-void addItem(SLLNode** head, int newNodePosition);
+void addItemSLL(SingleLinkedList* singleLinkedList, int newNodePosition);
 
-void deleteItem(SLLNode** head, int deleteNodePosition);
+void deleteItemSLL(SingleLinkedList* singleLinkedList, int deleteNodePosition);
+
+void printSLL(SingleLinkedList* singleLinkedList);
+
+void freeSLL(SingleLinkedList* singleLinkedList);
+
+void addNodeAtHead(SingleLinkedList* singleLinkedList, SLLNode* newNode);
+
+void deleteNodeAtHead(SingleLinkedList* singleLinkedList);
+
+SLLNode* getNodeAtPosition(SLLNode* head, int position);
 
 #endif //DATASTRUCTURES_SINGLELINKEDLIST_H

@@ -4,7 +4,7 @@
 #include "../include/doublelinkedlist.h"
 
 int main(void) {
-    showMenu();
+    showMainMenu();
 
     int choice;
     scanf("%d", &choice);
@@ -19,9 +19,9 @@ int main(void) {
             scanf("%d", &choice);
             printBorder();
             if (choice == 1) {
-                createCSLL();
+                createSLL(true);
             } else if (choice == 2) {
-                createNCSLL();
+                createSLL(false);
             }
             break;
 

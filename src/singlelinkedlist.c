@@ -2,155 +2,76 @@
 #include "../include/utils.h"
 #include <malloc.h>
 
-// Non-circular single-linked list
-void createNCSLL() {
-    SLLNode* head = NULL;
-    initializeNCSLL(&head);
-    while (SLLMenu(&head, false));
-    freeNCSLL(head);
+void createSLL(bool isCircular) {
+    SingleLinkedList *singleLinkedList = (SingleLinkedList*)malloc(sizeof(SingleLinkedList));
+    singleLinkedList->isCircular = isCircular;
+    initializeSLL(singleLinkedList);
+    while (SLLAction(singleLinkedList));
+    freeSLL(singleLinkedList);
 }
 
-void initializeNCSLL(SLLNode** head) {
+void initializeSLL(SingleLinkedList* singleLinkedList) {
     int listSize = setSLLSize();
-    for (int i = 0; i < listSize; i++) {
-        if (i == 0) {
-            *head = createSLLNode();
-        } else {
-            SLLNode* previousNode = *head;
-            while (previousNode->next != NULL) {
-                previousNode = previousNode->next;
-            }
+    if (listSize > 0) {
+        singleLinkedList->head = createSLLNode();
+    }
 
-            SLLNode* newNode = createSLLNode();
-            previousNode->next = newNode;
+    for (int i = 1; i < listSize; i++) {
+        SLLNode* newNode = createSLLNode();
+        if (singleLinkedList->isCircular && i == listSize - 1) {
+            newNode->next = singleLinkedList->head;
         }
-    }
-}
 
-void printNCSLL(SLLNode* head) {
-    printBorder();
-    puts("Single-linked list:");
-    while (head->next != NULL) {
-        printf("%d —> ", head->value);
-        head = head->next;
-    }
-    printf("%d\n", head->value);
-}
-
-void freeNCSLL(SLLNode* head) {
-    SLLNode* temp;
-    while (head != NULL) {
-        temp = head;
-        head = head->next;
-        free(temp);
-    }
-}
-
-// Circular single-linked list
-void createCSLL() {
-    SLLNode* head = NULL;
-    initializeCSLL(&head);
-    while (SLLMenu(&head, true));
-    freeCSLL(head);
-}
-
-void initializeCSLL(SLLNode** head) {
-    int listSize = setSLLSize();
-    for (int i = 0; i < listSize; i++) {
-        if (i == 0) {
-            *head = createSLLNode();
-        } else {
-            SLLNode* previousNode = *head;
-            while (previousNode->next != NULL) {
-                previousNode = previousNode->next;
-            }
-
-            SLLNode* newNode = createSLLNode();
-            if (i == listSize - 1) newNode->next = *head;
-            previousNode->next = newNode;
+        SLLNode* previousNode = singleLinkedList->head;
+        while (previousNode->next != NULL) {
+            previousNode = previousNode->next;
         }
+        previousNode->next = newNode;
     }
-    printBorder();
 }
 
-void printCSLL(SLLNode* head) {
-    printBorder();
-    puts("Single-linked list:");
-    SLLNode* curr = head;
-    do {
-        printf("%d —> ", curr->value);
-        curr = curr->next;
-    } while (curr != head);
-    printf("%d(head)\n", head->value);
-}
-
-void freeCSLL(SLLNode* head) {
-    if (head == NULL) return;
-
-    SLLNode* temp = head;
-    SLLNode* nextNode;
-
-    do {
-        nextNode = temp->next;
-        free(temp);
-        temp = nextNode;
-    } while (temp != head);
-
-    head = NULL;
-}
-
-// Both
 int setSLLSize() {
     printf("Enter size of single-linked list -> ");
     int listSize;
     scanf("%d", &listSize);
-
     printBorder();
-
     return listSize;
 }
 
 SLLNode* createSLLNode() {
     SLLNode* node = (SLLNode*)malloc(sizeof(SLLNode));
 
-    printf("Enter the value: ");
+    printf("Enter the value of node: ");
     scanf("%d", &node->value);
     node->next = NULL;
 
     return node;
 }
 
-int SLLMenu(SLLNode** head, bool isSSLCircular) {
+int SLLAction(SingleLinkedList* singleLinkedList) {
+    showSSLMenu();
     printBorder();
-    puts("Actions:");
-    puts("1 - Add item");
-    puts("2 - Delete item");
-    puts("3 - Print SLL");
-    puts("4 - Exit");
-    printf("Your choice -> ");
 
     int choice;
     scanf("%d", &choice);
 
     switch (choice) {
         case 1:
-            printBorder();
             printf("Enter position of new node -> ");
             int newNodePosition;
             scanf("%d", &newNodePosition);
-            addItem(head, newNodePosition);
+            addItemSLL(singleLinkedList, newNodePosition);
             break;
 
         case 2:
-            printBorder();
             printf("Enter position of node that you want to delete -> ");
             int deleteNodePosition;
             scanf("%d", &deleteNodePosition);\
-            deleteItem(head, deleteNodePosition);
+            deleteItemSLL(singleLinkedList, deleteNodePosition);
             break;
 
         case 3:
-            isSSLCircular ? printCSLL(*head) : printNCSLL(*head);
+            printSLL(singleLinkedList);
             break;
 
         case 4:
@@ -163,41 +84,104 @@ int SLLMenu(SLLNode** head, bool isSSLCircular) {
     return 1;
 }
 
-void addItem(SLLNode** head, int newNodePosition) {
+void addItemSLL(SingleLinkedList* singleLinkedList, int newNodePosition) {
     SLLNode* newNode = createSLLNode();
+
     if (newNodePosition == 1) {
-        newNode->next = *head;
-        *head = newNode;
+        addNodeAtHead(singleLinkedList, newNode);
+    } else {
+        SLLNode* prevNode = getNodeAtPosition(singleLinkedList->head, newNodePosition);
+        newNode->next = prevNode->next;
+        prevNode->next = newNode;
     }
-
-    SLLNode* curr = *head;
-    int currentPosition = 1;
-    while (currentPosition < newNodePosition - 1) {
-        curr = curr->next;
-        currentPosition++;
-    }
-
-    newNode->next = curr->next;
-    curr->next = newNode;
 }
 
-void deleteItem(SLLNode** head, int deleteNodePosition) {
-    SLLNode* temp;
+void deleteItemSLL(SingleLinkedList* singleLinkedList, int deleteNodePosition) {
     if (deleteNodePosition == 1) {
-        temp = *head;
-        *head = (*head)->next;
+        deleteNodeAtHead(singleLinkedList);
+    } else {
+        SLLNode* prevNode = getNodeAtPosition(singleLinkedList->head, deleteNodePosition);
+        SLLNode* temp = prevNode->next;
+        prevNode->next = prevNode->next->next;
         free(temp);
     }
+}
 
-    SLLNode* curr = *head;
+void printSLL(SingleLinkedList* singleLinkedList) {
+    puts("Single-linked list:");
+    if (singleLinkedList->isCircular) {
+        SLLNode* curr = singleLinkedList->head;
+        do {
+            printf("%d —> ", curr->value);
+            curr = curr->next;
+        } while (curr != singleLinkedList->head);
+        printf("%d(head)\n", singleLinkedList->head->value);
+    } else {
+        while (singleLinkedList->head->next != NULL) {
+            printf("%d —> ", singleLinkedList->head->value);
+            singleLinkedList->head = singleLinkedList->head->next;
+        }
+        printf("%d\n", singleLinkedList->head->value);
+    }
+}
+
+void freeSLL(SingleLinkedList* singleLinkedList) {
+    if (singleLinkedList->isCircular) {
+        SLLNode *temp = singleLinkedList->head;
+        SLLNode *nextNode;
+        do {
+            nextNode = temp->next;
+            free(temp);
+            temp = nextNode;
+        } while (temp != singleLinkedList->head);
+        singleLinkedList->head = NULL;
+    } else {
+        SLLNode *temp;
+        while (singleLinkedList->head != NULL) {
+            temp = singleLinkedList->head;
+            singleLinkedList->head = singleLinkedList->head->next;
+            free(temp);
+            temp = NULL;
+        }
+    }
+    free(singleLinkedList);
+    singleLinkedList = NULL;
+}
+
+void addNodeAtHead(SingleLinkedList* singleLinkedList, SLLNode* newNode) {
+    if (singleLinkedList->isCircular) {
+        SLLNode* temp = singleLinkedList->head;
+        while (temp->next != singleLinkedList->head) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+    newNode->next = singleLinkedList->head;
+    singleLinkedList->head = newNode;
+}
+
+void deleteNodeAtHead(SingleLinkedList* singleLinkedList) {
+    SLLNode* temp = singleLinkedList->head;
+    while (singleLinkedList->isCircular && temp->next != singleLinkedList->head) {
+        temp = temp->next;
+    }
+
+    singleLinkedList->head = singleLinkedList->head->next;
+
+    if (singleLinkedList->isCircular) {
+        free(temp->next);
+        temp->next = singleLinkedList->head;
+    } else {
+        free(temp);
+    }
+}
+
+SLLNode* getNodeAtPosition(SLLNode* head, int position) {
+    SLLNode* curr = head;
     int currentPosition = 1;
-    while (currentPosition < deleteNodePosition - 1) {
+    while (currentPosition < position - 1) {
         curr = curr->next;
         currentPosition++;
     }
-
-    temp = curr->next;
-    curr->next = curr->next->next;
-    free(temp);
+    return curr;
 }
-
