@@ -3,27 +3,28 @@
 #include <malloc.h>
 
 void createDLL() {
-    int listSize = setDLLSize();
     DLLNode* head = NULL;
-    initializeDLL(&head, listSize);
+    initializeDLL(&head);
     printDLL(head);
+    reversePrintDLL(head);
     freeDLL(head);
 }
 
-void initializeDLL(DLLNode** head, int listSize) {
-    for (int i = 0; i < listSize; i++) {
-        if (i == 0) {
-            *head = createDLLNode();
-        } else {
-            DLLNode* previousNode = *head;
-            while (previousNode->next != NULL) {
-                previousNode = previousNode->next;
-            }
+void initializeDLL(DLLNode** head) {
+    int listSize = setDLLSize();
+    if (listSize > 0) {
+        *head = createDLLNode();
+    }
 
-            DLLNode* newNode = createDLLNode();
-            newNode->prev = previousNode;
-            previousNode->next = newNode;
+    for (int i = 1; i < listSize; i++) {
+        DLLNode* prev = *head;
+        while (prev->next != NULL) {
+            prev = prev->next;
         }
+
+        DLLNode* newNode = createDLLNode();
+        newNode->prev = prev;
+        prev->next = newNode;
     }
     printBorder();
 }
@@ -32,9 +33,7 @@ int setDLLSize() {
     printf("Enter size of double-linked list -> ");
     int listSize;
     scanf("%d", &listSize);
-
     printBorder();
-
     return listSize;
 }
 
@@ -50,11 +49,25 @@ DLLNode* createDLLNode() {
 }
 
 void printDLL(DLLNode* head) {
+    puts("Normal output:");
     while (head->next != NULL) {
         printf("%d <—> ", head->value);
         head = head->next;
     }
     printf("%d", head->value);
+}
+
+void reversePrintDLL(DLLNode* head) {
+    puts("\n\nReverse output:");
+    DLLNode* last = head;
+    while (last->next != NULL) {
+        last = last->next;
+    }
+    while (last->prev != NULL) {
+        printf("%d <—> ", last->value);
+        last = last->prev;
+    }
+    printf("%d", last->value);
 }
 
 void freeDLL(DLLNode* head) {

@@ -11,13 +11,15 @@ struct DLLNode {
 
 void createDLL();
 
-void initializeDLL(DLLNode** head, int listSize);
+void initializeDLL(DLLNode** head);
 
 int setDLLSize();
 
 DLLNode* createDLLNode();
 
 void printDLL(DLLNode* head);
+
+void reversePrintDLL(DLLNode* head);
 
 void freeDLL(DLLNode* head);
 
