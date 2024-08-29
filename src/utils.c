@@ -14,7 +14,7 @@ void showMainMenu() {
     printf("Your choice -> ");
 }
 
-void showSSLMenu() {
+void showSLLMenu() {
     printBorder();
     puts("Actions:");
     puts("1 - Add item");
@@ -24,6 +24,24 @@ void showSSLMenu() {
     printf("Your choice -> ");
 }
 
+void showDLLMenu() {
+    printBorder();
+    puts("Actions:");
+    puts("1 - Add item");
+    puts("2 - Delete item");
+    puts("3 - Print DLL");
+    puts("4 - Exit");
+    printf("Your choice -> ");
+}
+
 void printBorder() {
     puts("\n=====================================================\n");
+}
+
+int setListSize() {
+    printf("Enter size of  list -> ");
+    int listSize;
+    scanf("%d", &listSize);
+    printBorder();
+    return listSize;
 }

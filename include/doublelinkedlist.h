@@ -13,9 +13,15 @@ void createDLL();
 
 void initializeDLL(DLLNode** head);
 
-int setDLLSize();
-
 DLLNode* createDLLNode();
+
+int DLLAction(DLLNode** head);
+
+void addItemDLL(DLLNode** head, int newNodePosition);
+
+void deleteItemDLL(DLLNode** head, int deleteNodePosition);
+
+DLLNode* getDLLNodeAtPosition(DLLNode* head, int position);
 
 void printDLL(DLLNode* head);
 

@@ -3,8 +3,12 @@
 
 void showMainMenu();
 
-void showSSLMenu();
+void showSLLMenu();
+
+void showDLLMenu();
 
 void printBorder();
+
+int setListSize();
 
 #endif //DATASTRUCTURES_UTILS_H

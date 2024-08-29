@@ -19,24 +19,22 @@ void createSLL(bool isCircular);
 
 void initializeSLL(SingleLinkedList* singleLinkedList);
 
-int setSLLSize();
-
 SLLNode* createSLLNode();
 
 int SLLAction(SingleLinkedList* singleLinkedList);
 
 void addItemSLL(SingleLinkedList* singleLinkedList, int newNodePosition);
 
+void addNodeAtHead(SingleLinkedList* singleLinkedList, SLLNode* newNode);
+
 void deleteItemSLL(SingleLinkedList* singleLinkedList, int deleteNodePosition);
+
+void deleteNodeAtHead(SingleLinkedList* singleLinkedList);
+
+SLLNode* getSLLNodeAtPosition(SLLNode* head, int position);
 
 void printSLL(SingleLinkedList* singleLinkedList);
 
 void freeSLL(SingleLinkedList* singleLinkedList);
-
-void addNodeAtHead(SingleLinkedList* singleLinkedList, SLLNode* newNode);
-
-void deleteNodeAtHead(SingleLinkedList* singleLinkedList);
-
-SLLNode* getNodeAtPosition(SLLNode* head, int position);
 
 #endif //DATASTRUCTURES_SINGLELINKEDLIST_H
